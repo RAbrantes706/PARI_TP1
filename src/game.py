@@ -21,3 +21,46 @@ class Query:
         else:
             self.correct = False
             print(Fore.RED + self.response.lower() + Fore.RESET)
+
+        if self.response == 'X':
+            return -1
+        else:
+            return 0
+
+    def __str__(self):
+        return 'I asked ' + self.request + ' and you input '\
+               + self.response + ' in ' + self.time + ' seconds'
+
+def timedGame(maxTime):
+    print('Running test up to ' + str(maxTime) + ' seconds.')
+    print('Press any key to start...')
+    readchar.readchar()
+
+    queryList = []
+    givenUp = False
+
+    start = time()
+    while time() - start < maxTime and not givenUp:
+        query = Query()
+        givenUp = query.ask() != 0
+        if time() - start < maxTime:
+            queryList.append(query)
+        else:
+            print('The last input was out of time!')
+
+    return queryList
+
+def untimedGame(maxAttempts):
+    print('Running test up to ' + str(maxAttempts) + ' attempts.')
+    print('Press any key to start...')
+    readchar.readchar()
+
+    queryList = []
+    for i in range(0, maxAttempts):
+        query = Query()
+        givenUp = query.ask() != 0
+        if(givenUp):
+            break
+        queryList.append(query)
+
+    return queryList

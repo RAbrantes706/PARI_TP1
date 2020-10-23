@@ -9,9 +9,7 @@ import argparse
 
 import readchar
 
-from game import Query
-
-Query_List = []
+from game import Query, timedGame, untimedGame
 
 def main():
 
@@ -22,14 +20,9 @@ def main():
     print(args)
 
     maximum_tries = args['max_tries']
-    print('Get Prepared, the chalange is about to beggin, you will type ' + str(maximum_tries) + ' chars in a range of "a" to "z" ')
-    print('press any key to continue')
-    readchar.readchar()
+    print('Get Prepared, the chalange is about to beggin...')
 
-    for i in range(0,maximum_tries):
-        q = Query()
-        q.ask()
-        Query_List.append(q)
+    Query_List = untimedGame(maximum_tries)
 
     for query in Query_List:
         print(query.request + ' ' + query.response)
