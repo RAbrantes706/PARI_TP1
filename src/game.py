@@ -35,7 +35,7 @@ def timedGame(maxTime):
     print('Running test up to ' + str(maxTime) + ' seconds.')
     print('Press any key to start...')
     readchar.readchar()
-    startDate = localtime()
+    startDate = time()
 
     queryList = []
     givenUp = False
@@ -49,14 +49,14 @@ def timedGame(maxTime):
         else:
             print('The last input was out of time!')
 
-    endDate = localtime()
+    endDate = time()
     return (queryList, startDate, endDate)
 
 def untimedGame(maxAttempts):
     print('Running test up to ' + str(maxAttempts) + ' attempts.')
     print('Press any key to start...')
     readchar.readchar()
-    startDate = localtime()
+    startDate = time()
 
     queryList = []
     for i in range(0, maxAttempts):
@@ -66,5 +66,5 @@ def untimedGame(maxAttempts):
             break
         queryList.append(query)
 
-    endDate = localtime()
+    endDate = time()
     return (queryList, startDate, endDate)

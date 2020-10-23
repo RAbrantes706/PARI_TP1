@@ -7,7 +7,12 @@
 # -----------------------------------------------
 
 import argparse
-from game import Query, timedGame, untimedGame
+from game import timedGame, untimedGame
+from collections import namedtuple
+from time import ctime
+from pprint import pprint
+
+Input = namedtuple('Input', ['requested', 'received', 'duration'])
 
 def main():
 
@@ -32,22 +37,38 @@ def main():
     hits = 0
     hit_total_duration = 0
     miss_total_duration = 0
+    inputs = []
     for query in Query_List[0]:
+        inputs.append(Input(query.request, query.response, query.time))
         if query.correct:
             hits += 1
             hit_total_duration += query.time
         else:
-            miss_total_duration += 1
+            miss_total_duration += query.time
 
-    stats = {'test_duration':Query_List[2]-Query_List[1],
-             'test_start':Query_List[1],
-             'test_end':Query_List[2],
+    accuracy = 0
+    type_average_duration = 0
+    type_miss_average_duration = 0
+    type_hit_average_duration = 0
+    if not hits == len(Query_List[0]):
+        type_miss_average_duration = miss_total_duration/(len(Query_List[0])-hits)
+    if not hits == 0:
+        type_hit_average_duration = hit_total_duration/hits
+    if not len(Query_List[0]) == 0:
+        accuracy = hits*1.0/len(Query_List[0])
+        type_average_duration = (Query_List[2] - Query_List[1]) / len(Query_List[0])
+
+    stats = {'inputs':inputs,
+             'test_duration':Query_List[2]-Query_List[1],
+             'test_start':ctime(Query_List[1]),
+             'test_end':ctime(Query_List[2]),
              'number_of_types':len(Query_List[0]),
              'number_of_hits':hits,
-             'accuracy':hits/len(Query_List[0]),
-             'type_average_duration':(Query_List[2]-Query_List[1])/len(Query_List[0]),
-             'type_hit_average_duration':hit_total_duration/hits,
-             'type_miss_average_duration':miss_total_duration/(len(Query_List[0])-hits)}
+             'accuracy':accuracy,
+             'type_average_duration':type_average_duration,
+             'type_hit_average_duration':type_hit_average_duration,
+             'type_miss_average_duration':type_miss_average_duration}
 
+    pprint(stats)
 if __name__ == '__main__':
     main()
