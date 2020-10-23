@@ -5,10 +5,8 @@
 #
 # PARI - TP1 - GRUPO 3, October 2020
 # -----------------------------------------------
+
 import argparse
-
-import readchar
-
 from game import Query, timedGame, untimedGame
 
 def main():
@@ -26,14 +24,30 @@ def main():
 
     print('Get Prepared, the chalange is about to beggin...')
 
-    if timed_game == False:
+    if not timed_game:
         Query_List = untimedGame(maximum_tries)
     else:
         Query_List = timedGame(maximum_tries)
 
-    for query in Query_List:
-        print(query.request + ' ' + query.response)
+    hits = 0
+    hit_total_duration = 0
+    miss_total_duration = 0
+    for query in Query_List[0]:
+        if query.correct:
+            hits += 1
+            hit_total_duration += query.time
+        else:
+            miss_total_duration += 1
 
+    stats = {'test_duration':Query_List[2]-Query_List[1],
+             'test_start':Query_List[1],
+             'test_end':Query_List[2],
+             'number_of_types':len(Query_List[0]),
+             'number_of_hits':hits,
+             'accuracy':hits/len(Query_List[0]),
+             'type_average_duration':(Query_List[2]-Query_List[1])/len(Query_List[0]),
+             'type_hit_average_duration':hit_total_duration/hits,
+             'type_miss_average_duration':miss_total_duration/(len(Query_List[0])-hits)}
 
 if __name__ == '__main__':
     main()

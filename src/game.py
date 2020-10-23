@@ -1,6 +1,6 @@
 import random
 import readchar
-from time import time
+from time import time, localtime
 from colorama import Fore
 
 class Query:
@@ -22,7 +22,7 @@ class Query:
             self.correct = False
             print(Fore.RED + self.response.lower() + Fore.RESET)
 
-        if self.response == 'X':
+        if self.response == ' ':
             return -1
         else:
             return 0
@@ -35,6 +35,7 @@ def timedGame(maxTime):
     print('Running test up to ' + str(maxTime) + ' seconds.')
     print('Press any key to start...')
     readchar.readchar()
+    startDate = localtime()
 
     queryList = []
     givenUp = False
@@ -48,12 +49,14 @@ def timedGame(maxTime):
         else:
             print('The last input was out of time!')
 
-    return queryList
+    endDate = localtime()
+    return (queryList, startDate, endDate)
 
 def untimedGame(maxAttempts):
     print('Running test up to ' + str(maxAttempts) + ' attempts.')
     print('Press any key to start...')
     readchar.readchar()
+    startDate = localtime()
 
     queryList = []
     for i in range(0, maxAttempts):
@@ -63,4 +66,5 @@ def untimedGame(maxAttempts):
             break
         queryList.append(query)
 
-    return queryList
+    endDate = localtime()
+    return (queryList, startDate, endDate)
