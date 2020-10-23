@@ -31,6 +31,9 @@ def main():
         q.ask()
         Query_List.append(q)
 
+    for query in Query_List:
+        print(query.request + ' ' + query.response)
+
 
 if __name__ == '__main__':
     main()
