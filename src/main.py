@@ -6,10 +6,12 @@
 # PARI - TP1 - GRUPO 3, October 2020
 # -----------------------------------------------
 
-def main():
-    #write some code
-    pass
-    pass
+from game import Query
 
-if __name__ == 'main':
+def main():
+    for i in range(0,10):
+        q = Query()
+        q.ask()
+
+if __name__ == '__main__':
     main()
