@@ -6,7 +6,9 @@
 # PARI - TP1 - GRUPO 3, October 2020
 # -----------------------------------------------
 
+
 import argparse
+from colorama import Fore
 from game import timedGame, untimedGame #Import functions from "game.py"
 from collections import namedtuple
 from time import ctime
@@ -16,11 +18,16 @@ Input = namedtuple('Input', ['requested', 'received', 'duration']) #Create a Tup
 
 def main():
 
-    parser = argparse.ArgumentParser(description='Test of Texting Skills. I chalange YOU, to type the maximum of correct chars you can') #Create a Parse to the script
-    parser.add_argument('-mv', '--max_value', type=int, default=20,  #Adding Parses
-                        help='Max Number of tries you want to play')
+    parser = argparse.ArgumentParser(description=Fore.YELLOW + 'Test of Texting Skills. I chalange YOU, to type the maximum of correct chars you can.' + Fore.GREEN) #Create a Parse to the script
+
     parser.add_argument ('-umt', '--timed_game', action='store_true',
-                         help = 'Timed game mode, if you select it, the Max Number of tries you tipped will become the max duration of the challenge')
+                         help = Fore.RED + 'Activate Timed game mode' + Fore.YELLOW + ', if you select it, the Max Number you tipped will become the max duration of the challenge' + Fore.GREEN)
+
+    parser.add_argument('-mv', '--max_value', type=int, default=20,  #Adding Parses
+                        help= Fore.YELLOW + 'Max Number of tries you want in ' + Fore.RED + 'untimed game mode'
+                        + Fore.BLUE + ' OR' + Fore.YELLOW + ' Max seconds you want to play in' + Fore.RED + ' untimed game mode'+ Fore.RESET +
+                        "\n" + Fore.CYAN + '\n Default = 20 ' + Fore.RESET)
+
     args = vars(parser.parse_args()) #Create a Variable to keep information of parser input
     print(args) #Show to the user the type of game with the number of tries or seconds of duration
 
